@@ -1,6 +1,7 @@
 # %%
 from math import *
 from random import *
+
 import os
 import time
 
@@ -29,7 +30,7 @@ def afficher_damier():
     for i in range(ligne):
         for j in range(colonne):
             if M[i][j]==1:
-                print("*",end="") # mettre le end car /n par défaut
+                print("*", end="");
             else:
                 print(" ",end="") # mettre le end car /n par défaut
         print("\n")
