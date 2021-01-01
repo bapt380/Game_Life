@@ -4,8 +4,8 @@ from random import *
 from tkinter import *
 import os
 import time
-
-# TODO Mettre en place les trois boutons échelles (utiliser get pour récupérer la valeur)
+# TODO finir bouton vitesse (utiliser get pour récupérer la valeur)
+# TODO Mettre en place les 2 autres boutons échelles (utiliser get pour récupérer la valeur)
 # TODO améliorer la déclaration des dimensions de notre fenêtre
 # TODO créer une frame droite et une frame gauche pour séparer le menu et le jeu.
 # FIXME c'est peut être dû à l'organisation avec une seule frame mais j'ai l'impression que mon tableau est coupé sur la droite et sur le bas...
@@ -46,7 +46,8 @@ def initialiser():
            
 
 
-def afficher_damier():
+def afficher_damier(): #TODO mettre vitesse peut être en param
+    #time.sleep(vitesse)
     os.system("clear")
     for i in range(ligne):
         for j in range(colonne):
@@ -149,8 +150,15 @@ Taille.pack(side = TOP)
 Vie = Scale(fenetre, orient='horizontal', from_=0, to=100, resolution=1, length=50, label='% de vie')
 Vie.pack(side = TOP)
 
-Vitesse = Scale(fenetre, orient='horizontal', from_=0, to=10, resolution=1, length=50, label='Vitesse')
+#FIXME
+def vitesse():
+    global Vitesse
+    #afficher_damier(10-Vitesse.get()) # si c'est 0 on sleep 10s si la vitesse est de 10 on sleep de 0s
+
+Vitesse = Scale(fenetre, orient='horizontal', from_=0, to=10, resolution=1, length=50, label='Vitesse',command = vitesse)
 Vitesse.pack(side = TOP)
+
+
 
 #fenetre.after(500, life)
 fenetre.mainloop()
