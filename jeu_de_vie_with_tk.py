@@ -7,22 +7,24 @@ import time
 # TODO finir bouton vitesse (utiliser get pour récupérer la valeur) et continuer bouton pourcentage vie (j'ai juste apporté des mofications dans la fonction initialiser mais ça fonctionne pas bien)
 # TODO Mettre en place les boutons restants boutons échelles (utiliser get pour récupérer la valeur)
 # TODO améliorer la déclaration des dimensions de notre fenêtre
-# TODO créer une frame droite et une frame gauche pour séparer le menu et le jeu.
 # FIXME c'est peut être dû à l'organisation avec une seule frame mais j'ai l'impression que mon tableau est coupé sur la droite et sur le bas...
 
 fenetre = Tk()
 fenetre.title("Le jeu de la vie")
-frame_jeu_de_vie = Frame(fenetre, width=600, height=600)
-frame_jeu_de_vie.grid(row = 0, column = 0)
+frame_jeu_de_vie = Frame(fenetre, width=600, height=600, bg = "Green")
+frame_jeu_de_vie.grid(row = 0, column = 0, sticky = "N"+"S"+"E"+"W")
 
 canvas = Canvas(frame_jeu_de_vie, width=600, height=600)
 #canvas = Canvas(fenetre, width=side*ligne, height=side*colonne)
 
-canvas.pack()
+#TODO Se débarasser de tous les packs pour centrer la grille. Ou faire autrement jsp
+canvas.pack(expand = 1, fill=BOTH)
 
-frame_menu = Frame(fenetre,width = 200, height = 600,bg = "Blue")
-frame_menu.grid(row = 0,column = 1)
+frame_menu_haut = Frame(fenetre,width = 200, height = 300, bg = "Grey")
+frame_menu_haut.grid(row = 0, column = 1,sticky = "N"+"S"+"E"+"W")
 
+frame_menu_bas = Frame(fenetre,width = 200, height = 300, bg = "Red")
+frame_menu_bas.grid(row = 1, column = 1,sticky = "N"+"S"+"E"+"W")
 
 #M=[]
 ligne= 25
@@ -153,32 +155,31 @@ def quitter():
 
 #initialiser()
 
-Initialiser = Button(frame_menu, text="Initialiser", command=initialiser)
-Initialiser.grid(row = 2)
+Initialiser = Button(frame_menu_haut, text="Initialiser", command=initialiser)
+Initialiser.grid(row = 2, column = 0, sticky = "se")
 
-Lancer = Button(frame_menu, text="Lancer", command=nouvelle_generation)
-Lancer.grid(row = 0)
+Lancer = Button(frame_menu_haut, text="Lancer", command=nouvelle_generation)
+Lancer.grid(row = 0, column = 0)
 
-Arreter = Button(frame_menu, text="Arreter", command = arreter)
+Arreter = Button(frame_menu_haut, text="Arreter", command = arreter)
 Arreter.grid(row = 1, column = 0)
 
-Quitter = Button(frame_menu, text="Quitter", command = quitter)
-Quitter.grid(sticky = S)
+Quitter = Button(frame_menu_bas, text="Quitter", command = quitter)
+Quitter.grid(row = 3, column = 0)
 
-Taille = Scale(frame_menu, orient='horizontal', from_=0, to=100, resolution=1, length=50, label='Taille de la grille')
-Taille.grid(sticky = S)
+Taille = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, length=50, label='Taille de la grille')
+Taille.grid(row = 0, column = 0)
 
-Vie = Scale(frame_menu, orient='horizontal', from_=0, to=100, resolution=1, length=50, label='% de vie')
-Vie.grid(sticky = S)
+Vie = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, length=50, label='% de vie')
+Vie.grid(row = 1, column = 0)
 
 #FIXME
 def vitesse():
     global Vitesse
     #afficher_damier(10-Vitesse.get()) # si c'est 0 on sleep 10s si la vitesse est de 10 on sleep de 0s
 
-Vitesse = Scale(frame_menu, orient='horizontal', from_=0, to=10, resolution=1, length=50, label='Vitesse',command = vitesse)
-Vitesse.grid(sticky = S)
-
+Vitesse = Scale(frame_menu_bas, orient='horizontal', from_=0, to=10, resolution=1, length=50, label='Vitesse',command = vitesse)
+Vitesse.grid(row = 2, column = 0)
 
 #fenetre.after(500, life)
 fenetre.mainloop()
