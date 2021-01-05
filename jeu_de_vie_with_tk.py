@@ -7,17 +7,19 @@ import time
 # TODO finir bouton vitesse (utiliser get pour récupérer la valeur) et continuer bouton pourcentage vie (j'ai juste apporté des mofications dans la fonction initialiser mais ça fonctionne pas bien)
 # TODO Mettre en place les boutons restants boutons échelles (utiliser get pour récupérer la valeur)
 # TODO améliorer la déclaration des dimensions de notre fenêtre
-# FIXME c'est peut être dû à l'organisation avec une seule frame mais j'ai l'impression que mon tableau est coupé sur la droite et sur le bas...
+#TODO Passer x et y en global?
 
 fenetre = Tk()
 fenetre.title("Le jeu de la vie")
+
+#Les couleurs c'est pour visualiser les frames
 frame_jeu_de_vie = Frame(fenetre, width=600, height=600, bg = "Green")
 frame_jeu_de_vie.grid(row = 0, column = 0, sticky = "nsew", rowspan = 2)
 
-canvas = Canvas(frame_jeu_de_vie, width=600, height=600)
+canvas = Canvas(frame_jeu_de_vie, width=600, height=600, bg = "Orange")
 #canvas = Canvas(fenetre, width=side*ligne, height=side*colonne)
 
-#TODO Se débarasser de tous les packs pour centrer la grille. Ou faire autrement jsp
+#Le canevas rempli toute la frame, c'est le grille de jeu qu'il faut redimensionner
 canvas.pack(expand = 1, fill=BOTH)
 
 frame_menu_haut = Frame(fenetre,width = 200, height = 300, bg = "Grey")
@@ -31,8 +33,8 @@ ligne= 25
 colonne= 25
 
 def initialiser(pourcentage_vie=1): # on voit bien que c'est broken il faudrait tout avoir en rouge
-    x = 10 # valeur fixée arbitrairement
-    y = 10 # valeur fixée arbitrairement
+    x = 0 # valeur fixée arbitrairement
+    y = 0 # valeur fixée arbitrairement
     global ligne
     global colonne
     global rectangles
@@ -56,13 +58,13 @@ def initialiser(pourcentage_vie=1): # on voit bien que c'est broken il faudrait 
             if (rand==1):
                 cmpt_vie+=1
 
-            rect = canvas.create_rectangle(x, y, x+10, y+10, fill="white") # (x,y) les coordonnées du coin supérieur gauche et (x+10, y+10) celles du coin inférieur droit.
+            rect = canvas.create_rectangle(x, y, x+20, y+20, fill="white") # (x,y) les coordonnées du coin supérieur gauche et (x+10, y+10) celles du coin inférieur droit.
             rectangles[i].append(rect)
             M[i].append(rand)
-            x += 10 # l'ordonnée est fixé à 10, on incrémente "l'abscisse" uniquement (2ème boucle for)
+            x += 22 # l'ordonnée est fixé à 10, on incrémente "l'abscisse" uniquement (2ème boucle for)
         # on est dans la 1ere boucle for
-        x = 10 # on fixe l'abscisse
-        y += 10 # on incrémente l'ordonnée
+        x = 0 # on fixe l'abscisse
+        y += 22 # on incrémente l'ordonnée
     afficher_damier()
     
 
