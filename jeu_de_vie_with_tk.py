@@ -12,7 +12,7 @@ import time
 fenetre = Tk()
 fenetre.title("Le jeu de la vie")
 frame_jeu_de_vie = Frame(fenetre, width=600, height=600, bg = "Green")
-frame_jeu_de_vie.grid(row = 0, column = 0, sticky = "N"+"S"+"E"+"W")
+frame_jeu_de_vie.grid(row = 0, column = 0, sticky = "nsew", rowspan = 2)
 
 canvas = Canvas(frame_jeu_de_vie, width=600, height=600)
 #canvas = Canvas(fenetre, width=side*ligne, height=side*colonne)
@@ -21,10 +21,10 @@ canvas = Canvas(frame_jeu_de_vie, width=600, height=600)
 canvas.pack(expand = 1, fill=BOTH)
 
 frame_menu_haut = Frame(fenetre,width = 200, height = 300, bg = "Grey")
-frame_menu_haut.grid(row = 0, column = 1,sticky = "N"+"S"+"E"+"W")
+frame_menu_haut.grid(row = 0, column = 1,sticky = "nsew")
 
 frame_menu_bas = Frame(fenetre,width = 200, height = 300, bg = "Red")
-frame_menu_bas.grid(row = 1, column = 1,sticky = "N"+"S"+"E"+"W")
+frame_menu_bas.grid(row = 1, column = 1,sticky = "sew")
 
 #M=[]
 ligne= 25
