@@ -4,8 +4,8 @@ from random import *
 from tkinter import *
 import os
 import time
-# TODO finir bouton vitesse (utiliser get pour récupérer la valeur)
-# TODO Mettre en place les 2 autres boutons échelles (utiliser get pour récupérer la valeur)
+# TODO finir bouton vitesse (utiliser get pour récupérer la valeur) et continuer bouton pourcentage vie (j'ai juste apporté des mofications dans la fonction initialiser mais ça fonctionne pas bien)
+# TODO Mettre en place les boutons restants boutons échelles (utiliser get pour récupérer la valeur)
 # TODO améliorer la déclaration des dimensions de notre fenêtre
 # TODO créer une frame droite et une frame gauche pour séparer le menu et le jeu.
 # FIXME c'est peut être dû à l'organisation avec une seule frame mais j'ai l'impression que mon tableau est coupé sur la droite et sur le bas...
@@ -18,24 +18,38 @@ canvas = Canvas(frame_jeu_de_vie, width=300, height=300)
 canvas.pack()
 #canvas = Canvas(fenetre, width=side*ligne, height=side*colonne)
 
-M=[]
-ligne= 50
-colonne= 50
+#M=[]
+ligne= 25
+colonne= 25
 
 
 
-def initialiser():
+def initialiser(pourcentage_vie=1): # on voit bien que c'est broken il faudrait tout avoir en rouge
     x = 10 # valeur fixée arbitrairement
     y = 10 # valeur fixée arbitrairement
     global ligne
     global colonne
     global rectangles
+    global M
+    M = []
     rectangles = []
+    global cmpt_vie 
+    cmpt_vie = 0
+
     for i in range(ligne):
         M.append([]) # Liste de liste qui contient les valeurs des cellules (1:vivante et 0:morte)
         rectangles.append([]) # Liste de liste qui contient tous les rectangles
         for j in range(colonne):
-            rand = randint(0,1)
+            # pourcentage_vie
+
+            if cmpt_vie<pourcentage_vie*colonne*ligne: # le problème vient de là
+                rand = randint(0,1)
+            else:
+                rand = 0
+
+            if (rand==1):
+                cmpt_vie+=1
+
             rect = canvas.create_rectangle(x, y, x+10, y+10, fill="white") # (x,y) les coordonnées du coin supérieur gauche et (x+10, y+10) celles du coin inférieur droit.
             rectangles[i].append(rect)
             M[i].append(rand)
@@ -43,12 +57,15 @@ def initialiser():
         # on est dans la 1ere boucle for
         x = 10 # on fixe l'abscisse
         y += 10 # on incrémente l'ordonnée
-           
+    afficher_damier()
+    
+
+
 
 
 def afficher_damier(): #TODO mettre vitesse peut être en param
     #time.sleep(vitesse)
-    os.system("clear")
+    #os.system("clear")
     for i in range(ligne):
         for j in range(colonne):
             if M[i][j]==1:
@@ -130,9 +147,9 @@ def quitter():
     fenetre.destroy()
 
 
-initialiser()
+#initialiser()
 
-Initialiser = Button(fenetre, text="Initialiser", command=afficher_damier)
+Initialiser = Button(fenetre, text="Initialiser", command=initialiser)
 Initialiser.pack(side = LEFT)
 
 Lancer = Button(fenetre, text="Lancer", command=nouvelle_generation)
