@@ -7,7 +7,6 @@ import time
 # TODO finir bouton vitesse (utiliser get pour récupérer la valeur) et continuer bouton pourcentage vie (j'ai juste apporté des mofications dans la fonction initialiser mais ça fonctionne pas bien)
 # TODO Mettre en place les boutons restants boutons échelles (utiliser get pour récupérer la valeur)
 # TODO améliorer la déclaration des dimensions de notre fenêtre
-#TODO Passer x et y en global?
 
 fenetre = Tk()
 fenetre.title("Le jeu de la vie")
@@ -19,7 +18,7 @@ frame_jeu_de_vie.grid(row = 0, column = 0, sticky = "nsew", rowspan = 2)
 canvas = Canvas(frame_jeu_de_vie, width=600, height=600, bg = "Orange")
 #canvas = Canvas(fenetre, width=side*ligne, height=side*colonne)
 
-#Le canevas rempli toute la frame, c'est le grille de jeu qu'il faut redimensionner
+#Le canevas remplit bien toute la frame, c'est le grille de jeu qu'il faut redimensionner
 canvas.pack(expand = 1, fill=BOTH)
 
 frame_menu_haut = Frame(fenetre,width = 200, height = 300, bg = "Grey")
@@ -157,22 +156,22 @@ def quitter():
 
 #initialiser()
 
-Initialiser = Button(frame_menu_haut, text="Initialiser", command=initialiser)
+Initialiser = Button(frame_menu_haut, text="Initialiser", command=initialiser, fg = "blue", width =11)
 Initialiser.grid(row = 2, column = 0, sticky = "se")
 
-Lancer = Button(frame_menu_haut, text="Lancer", command=nouvelle_generation)
+Lancer = Button(frame_menu_haut, text="Lancer", command=nouvelle_generation, fg = "blue", width = 11)
 Lancer.grid(row = 0, column = 0)
 
-Arreter = Button(frame_menu_haut, text="Arreter", command = arreter)
+Arreter = Button(frame_menu_haut, text="Arreter", command = arreter, fg = "blue", width = 11)
 Arreter.grid(row = 1, column = 0)
 
-Quitter = Button(frame_menu_bas, text="Quitter", command = quitter)
+Quitter = Button(frame_menu_bas, text="Quitter", command = quitter, fg = "blue", width = 11)
 Quitter.grid(row = 3, column = 0)
 
-Taille = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, length=50, label='Taille de la grille')
+Taille = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='Taille de la grille',fg = "blue")
 Taille.grid(row = 0, column = 0)
 
-Vie = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, length=50, label='% de vie')
+Vie = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='% de vie', fg = "blue")
 Vie.grid(row = 1, column = 0)
 
 #FIXME
@@ -180,7 +179,7 @@ def vitesse():
     global Vitesse
     #afficher_damier(10-Vitesse.get()) # si c'est 0 on sleep 10s si la vitesse est de 10 on sleep de 0s
 
-Vitesse = Scale(frame_menu_bas, orient='horizontal', from_=0, to=10, resolution=1, length=50, label='Vitesse',command = vitesse)
+Vitesse = Scale(frame_menu_bas, orient='horizontal', from_=0, to=10, resolution=1, label='Vitesse',command = vitesse, fg = "blue")
 Vitesse.grid(row = 2, column = 0)
 
 #fenetre.after(500, life)
