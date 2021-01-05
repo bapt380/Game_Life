@@ -12,17 +12,21 @@ import time
 
 fenetre = Tk()
 fenetre.title("Le jeu de la vie")
-frame_jeu_de_vie = Frame(fenetre, width=300, height=300)
-frame_jeu_de_vie.pack()
-canvas = Canvas(frame_jeu_de_vie, width=300, height=300)
-canvas.pack()
+frame_jeu_de_vie = Frame(fenetre, width=600, height=600)
+frame_jeu_de_vie.grid(row = 0, column = 0)
+
+canvas = Canvas(frame_jeu_de_vie, width=600, height=600)
 #canvas = Canvas(fenetre, width=side*ligne, height=side*colonne)
+
+canvas.pack()
+
+frame_menu = Frame(fenetre,width = 200, height = 600,bg = "Blue")
+frame_menu.grid(row = 0,column = 1)
+
 
 #M=[]
 ligne= 25
 colonne= 25
-
-
 
 def initialiser(pourcentage_vie=1): # on voit bien que c'est broken il faudrait tout avoir en rouge
     x = 10 # valeur fixée arbitrairement
@@ -149,39 +153,34 @@ def quitter():
 
 #initialiser()
 
-Initialiser = Button(fenetre, text="Initialiser", command=initialiser)
-Initialiser.pack(side = LEFT)
+Initialiser = Button(frame_menu, text="Initialiser", command=initialiser)
+Initialiser.grid(row = 2)
 
-Lancer = Button(fenetre, text="Lancer", command=nouvelle_generation)
-Lancer.pack(side = LEFT)
+Lancer = Button(frame_menu, text="Lancer", command=nouvelle_generation)
+Lancer.grid(row = 0)
 
-Arreter = Button(fenetre, text="Arreter", command = arreter)
-Arreter.pack(side = RIGHT)
+Arreter = Button(frame_menu, text="Arreter", command = arreter)
+Arreter.grid(row = 1, column = 0)
 
-Quitter = Button(fenetre, text="Quitter", command = quitter)
-Quitter.pack(side = RIGHT)
+Quitter = Button(frame_menu, text="Quitter", command = quitter)
+Quitter.grid(sticky = S)
 
-Taille = Scale(fenetre, orient='horizontal', from_=0, to=100, resolution=1, length=50, label='Taille de la grille')
-Taille.pack(side = TOP)
+Taille = Scale(frame_menu, orient='horizontal', from_=0, to=100, resolution=1, length=50, label='Taille de la grille')
+Taille.grid(sticky = S)
 
-Vie = Scale(fenetre, orient='horizontal', from_=0, to=100, resolution=1, length=50, label='% de vie')
-Vie.pack(side = TOP)
+Vie = Scale(frame_menu, orient='horizontal', from_=0, to=100, resolution=1, length=50, label='% de vie')
+Vie.grid(sticky = S)
 
 #FIXME
 def vitesse():
     global Vitesse
     #afficher_damier(10-Vitesse.get()) # si c'est 0 on sleep 10s si la vitesse est de 10 on sleep de 0s
 
-Vitesse = Scale(fenetre, orient='horizontal', from_=0, to=10, resolution=1, length=50, label='Vitesse',command = vitesse)
-Vitesse.pack(side = TOP)
-
+Vitesse = Scale(frame_menu, orient='horizontal', from_=0, to=10, resolution=1, length=50, label='Vitesse',command = vitesse)
+Vitesse.grid(sticky = S)
 
 
 #fenetre.after(500, life)
 fenetre.mainloop()
 
 
-#if __name__ == '__main__':
-    #main()
-
-# %%
