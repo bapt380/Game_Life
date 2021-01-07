@@ -33,20 +33,6 @@ frame_menu_bas = Frame(fenetre,width = 200, height = 300, bg = "Red")
 frame_menu_bas.grid(row = 1, column = 1,sticky = "sew")
 
 
-#FIXME
-def vitesse():
-    global Vitesse
-    #afficher_damier(10-Vitesse.get()) # si c'est 0 on sleep 10s si la vitesse est de 10 on sleep de 0s
-
-
-
-Vie = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='% de vie', fg = "blue",command = lambda val: print(val))
-Vie.grid(row = 1, column = 0)
-#Vie.set(50)
-#def pourcentagevie():
-    #global Vie
-    #return Vie.get()
-
 ligne= 25
 colonne= 25
 
@@ -91,9 +77,7 @@ def initialiser():
 
 
 
-def afficher_damier(): #TODO mettre vitesse peut être en param
-    #time.sleep(vitesse)
-    #os.system("clear")
+def afficher_damier(): 
     for i in range(ligne):
         for j in range(colonne):
             if M[i][j]==1:
@@ -147,7 +131,7 @@ def nouvelle_generation():
         x=0
         y=0
         vitesse = Vitesse.get()
-        print(vitesse)
+        
 
         # calculer le damier de la nouvelle génération en appliquant les règles
 
@@ -197,10 +181,12 @@ Taille = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=
 Taille.grid(row = 0, column = 0)
 
 
-Vitesse = Scale(frame_menu_bas, orient='horizontal', from_=0, to=10, resolution=1, label='Vitesse',command = vitesse, fg = "blue")
+Vitesse = Scale(frame_menu_bas, orient='horizontal', from_=0, to=10, resolution=1, label='Vitesse',command = lambda val: print(val), fg = "blue")
 Vitesse.grid(row = 2, column = 0)
 
 
+Vie = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='% de vie', fg = "blue",command = lambda val: print(val))
+Vie.grid(row = 1, column = 0)
 
 #fenetre.after(500, life)
 
