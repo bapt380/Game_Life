@@ -4,6 +4,7 @@ from random import *
 from tkinter import *
 import os
 import time
+
 # TODO finir bouton vitesse (utiliser get pour récupérer la valeur) et continuer bouton pourcentage vie (j'ai juste apporté des mofications dans la fonction initialiser mais ça fonctionne pas bien)
 # TODO Mettre en place les boutons restants boutons échelles (utiliser get pour récupérer la valeur)
 # TODO améliorer la déclaration des dimensions de notre fenêtre
