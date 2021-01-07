@@ -9,8 +9,6 @@ from random import shuffle
  
  
 
-# TODO finir bouton vitesse (utiliser get pour récupérer la valeur) et continuer bouton pourcentage vie (j'ai juste apporté des mofications dans la fonction initialiser mais ça fonctionne pas bien)
-# TODO Mettre en place les boutons restants boutons échelles (utiliser get pour récupérer la valeur)
 # TODO améliorer la déclaration des dimensions de notre fenêtre
 
 fenetre = Tk()
@@ -18,19 +16,19 @@ fenetre.title("Le jeu de la vie")
 global dimension_frame
 dimension_frame = 600
 #Les couleurs c'est pour visualiser les frames
-frame_jeu_de_vie = Frame(fenetre, width=600, height=600, bg = "Green")
+frame_jeu_de_vie = Frame(fenetre, width=600, height=600)
 frame_jeu_de_vie.grid(row = 0, column = 0, sticky = "nsew", rowspan = 2)
 
-canvas = Canvas(frame_jeu_de_vie, width=600, height=600, bg = "Orange")
+canvas = Canvas(frame_jeu_de_vie, width=600, height=600, bg = "grey")
 #canvas = Canvas(fenetre, width=side*ligne, height=side*colonne)
 
 #Le canevas remplit bien toute la frame, c'est le grille de jeu qu'il faut redimensionner
 canvas.pack(expand = 1, fill=BOTH)
 
-frame_menu_haut = Frame(fenetre,width = 200, height = 300, bg = "Grey")
+frame_menu_haut = Frame(fenetre,width = 200, height = 300, bg = "red")
 frame_menu_haut.grid(row = 0, column = 1,sticky = "nsew")
 
-frame_menu_bas = Frame(fenetre,width = 200, height = 300, bg = "Red")
+frame_menu_bas = Frame(fenetre,width = 200, height = 300)
 frame_menu_bas.grid(row = 1, column = 1,sticky = "sew")
 
 
