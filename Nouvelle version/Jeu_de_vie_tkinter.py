@@ -145,6 +145,8 @@ def nouvelle_generation():
         vecteur=[]
         x=0
         y=0
+        vitesse = Vitesse.get()
+        print(vitesse)
 
         # calculer le damier de la nouvelle génération en appliquant les règles
 
@@ -162,6 +164,8 @@ def nouvelle_generation():
         # copier le temp dans le principale        
         M=vecteur.copy()
         afficher_damier()
+        #FIXME Message d'erreur dans le terminal quand on bouge le curseur
+        time.sleep(1/(vitesse+1))
         global ID_nouvelle_generation
         ID_nouvelle_generation = fenetre.after(200, nouvelle_generation)
 
