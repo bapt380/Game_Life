@@ -37,8 +37,8 @@ frame_menu_bas.grid(row = 1, column = 1,sticky = "sew")
 
 
 def initialiser(): 
-    x = 0 # valeur fixée arbitrairement
-    y = 0 # valeur fixée arbitrairement
+    x = 0 
+    y = 0 
     global ligne
     global colonne
     global rectangles
@@ -53,12 +53,12 @@ def initialiser():
     M = [[0 for i in range(ligne)] for j in range(colonne)] # on initialise à 0 la grille
 
     #Génération de toutes les combinaisons possibles
-    combi = []
+    combi = [] # stocke toutes les combinaison possible
     for i in range(ligne):
         for j in range(colonne):
             combi.append((j, i))
-    #mélange aléatoire de combi
-    shuffle(combi)
+    
+    shuffle(combi) # permet de mélanger la liste de façon aléatoire
 
     for i in range(int(nombre_cellules_en_vie)):
         i, j = combi.pop()
@@ -133,7 +133,6 @@ def nouvelle_generation():
         x=0
         y=0
         vitesse = Vitesse.get()
-        
 
         # calculer le damier de la nouvelle génération en appliquant les règles
 
@@ -167,27 +166,27 @@ def quitter():
 
 #initialiser()
 
-Initialiser = Button(frame_menu_haut, text="Initialiser", command=initialiser, fg = "blue", width =11)
+Initialiser = Button(frame_menu_haut, text="Initialiser", command=initialiser, fg = "blue", width = 20)
 Initialiser.grid(row = 2, column = 0, sticky = "se")
 
-Lancer = Button(frame_menu_haut, text="Lancer", command=nouvelle_generation, fg = "blue", width = 11)
+Lancer = Button(frame_menu_haut, text="Lancer", command=nouvelle_generation, fg = "blue", width = 20)
 Lancer.grid(row = 0, column = 0)
 
-Arreter = Button(frame_menu_haut, text="Arreter", command = arreter, fg = "blue", width = 11)
+Arreter = Button(frame_menu_haut, text="Arreter", command = arreter, fg = "blue", width = 20)
 Arreter.grid(row = 1, column = 0)
 
-Quitter = Button(frame_menu_bas, text="Quitter", command = quitter, fg = "blue", width = 11)
+Quitter = Button(frame_menu_bas, text="Quitter", command = quitter, fg = "blue", width = 20)
 Quitter.grid(row = 3, column = 0)
 
-Taille = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='Taille de la grille',fg = "blue")
+Taille = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='Taille de la grille',fg = "blue",width = 20)
 Taille.grid(row = 0, column = 0)
 
 
-Vitesse = Scale(frame_menu_bas, orient='horizontal', from_=0, to=10, resolution=1, label='Vitesse',command = lambda val: print(val), fg = "blue")
+Vitesse = Scale(frame_menu_bas, orient='horizontal', from_=0, to=10, resolution=1, label='Vitesse',width = 20,command = lambda val: print(val), fg = "blue")
 Vitesse.grid(row = 2, column = 0)
 
 
-Vie = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='% de vie', fg = "blue",command = lambda val: print(val))
+Vie = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='% de vie', fg = "blue",width = 20,command = lambda val: print(val))
 Vie.grid(row = 1, column = 0)
 
 #fenetre.after(500, life)
