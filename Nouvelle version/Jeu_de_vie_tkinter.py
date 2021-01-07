@@ -15,7 +15,8 @@ from random import shuffle
 
 fenetre = Tk()
 fenetre.title("Le jeu de la vie")
-
+global dimension_frame
+dimension_frame = 600
 #Les couleurs c'est pour visualiser les frames
 frame_jeu_de_vie = Frame(fenetre, width=600, height=600, bg = "Green")
 frame_jeu_de_vie.grid(row = 0, column = 0, sticky = "nsew", rowspan = 2)
@@ -33,16 +34,17 @@ frame_menu_bas = Frame(fenetre,width = 200, height = 300, bg = "Red")
 frame_menu_bas.grid(row = 1, column = 1,sticky = "sew")
 
 
-ligne= 25
-colonne= 25
+
 
 def initialiser(): 
-    x = 10 # valeur fixée arbitrairement
-    y = 10 # valeur fixée arbitrairement
-    nombre_cellules_en_vie=25*25*(Vie.get()/100)
+    x = 0 # valeur fixée arbitrairement
+    y = 0 # valeur fixée arbitrairement
     global ligne
     global colonne
     global rectangles
+    ligne = colonne = Taille.get()
+    nombre_cellules_en_vie=ligne*colonne*(Vie.get()/100)
+
     global M
     M = []
     rectangles = []
@@ -65,12 +67,12 @@ def initialiser():
     for i in range(ligne):
         rectangles.append([]) # Liste de liste qui contient tous les rectangles
         for j in range(colonne):
-            rect = canvas.create_rectangle(x, y, x+10, y+10, fill="white") # (x,y) les coordonnées du coin supérieur gauche et (x+10, y+10) celles du coin inférieur droit.
+            rect = canvas.create_rectangle(x, y, x+(dimension_frame/ligne), y+(dimension_frame/ligne), fill="white") # (x,y) les coordonnées du coin supérieur gauche et (x+10, y+10) celles du coin inférieur droit.
             rectangles[i].append(rect)
-            x += 10 # l'ordonnée est fixé à 10, on incrémente "l'abscisse" uniquement (2ème boucle for)
+            x += (dimension_frame/ligne) # l'ordonnée est fixé à 10, on incrémente "l'abscisse" uniquement (2ème boucle for)
         # on est dans la 1ere boucle for
-        x = 10 # on fixe l'abscisse
-        y += 10 # on incrémente l'ordonnée
+        x = 0 # on fixe l'abscisse
+        y += (dimension_frame/ligne) # on incrémente l'ordonnée
     afficher_damier()
     
 
