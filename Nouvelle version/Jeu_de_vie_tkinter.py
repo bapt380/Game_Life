@@ -150,7 +150,7 @@ def nouvelle_generation():
         M=vecteur.copy()
         afficher_damier()
         #FIXME Message d'erreur dans le terminal quand on bouge le curseur
-        time.sleep(1/(vitesse+1))
+        time.sleep(exp(-vitesse))
         global ID_nouvelle_generation
         ID_nouvelle_generation = fenetre.after(200, nouvelle_generation)
 
