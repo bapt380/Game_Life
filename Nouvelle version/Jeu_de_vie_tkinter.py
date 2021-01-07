@@ -25,7 +25,7 @@ canvas = Canvas(frame_jeu_de_vie, width=600, height=600, bg = "grey")
 #Le canevas remplit bien toute la frame, c'est le grille de jeu qu'il faut redimensionner
 canvas.pack(expand = 1, fill=BOTH)
 
-frame_menu_haut = Frame(fenetre,width = 200, height = 300, bg = "red")
+frame_menu_haut = Frame(fenetre,width = 200, height = 300)
 frame_menu_haut.grid(row = 0, column = 1,sticky = "nsew")
 
 frame_menu_bas = Frame(fenetre,width = 200, height = 300)
