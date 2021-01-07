@@ -38,9 +38,11 @@ def vitesse():
     global Vitesse
     #afficher_damier(10-Vitesse.get()) # si c'est 0 on sleep 10s si la vitesse est de 10 on sleep de 0s
 
-Vie = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='% de vie', fg = "blue")
+
+
+Vie = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='% de vie', fg = "blue",command = lambda val: print(val))
 Vie.grid(row = 1, column = 0)
-Vie.set(50)
+#Vie.set(50)
 #def pourcentagevie():
     #global Vie
     #return Vie.get()
@@ -48,9 +50,10 @@ Vie.set(50)
 ligne= 25
 colonne= 25
 
-def initialiser(nombre_cellules_en_vie=25*25*(Vie.get()/100)): 
+def initialiser(): 
     x = 10 # valeur fixée arbitrairement
     y = 10 # valeur fixée arbitrairement
+    nombre_cellules_en_vie=25*25*(Vie.get()/100)
     global ligne
     global colonne
     global rectangles
@@ -74,12 +77,10 @@ def initialiser(nombre_cellules_en_vie=25*25*(Vie.get()/100)):
         M[i][j] = 1
 
     for i in range(ligne):
-        #M.append([]) # Liste de liste qui contient les valeurs des cellules (1:vivante et 0:morte)
         rectangles.append([]) # Liste de liste qui contient tous les rectangles
         for j in range(colonne):
             rect = canvas.create_rectangle(x, y, x+10, y+10, fill="white") # (x,y) les coordonnées du coin supérieur gauche et (x+10, y+10) celles du coin inférieur droit.
             rectangles[i].append(rect)
-            #M[i].append(rand)
             x += 10 # l'ordonnée est fixé à 10, on incrémente "l'abscisse" uniquement (2ème boucle for)
         # on est dans la 1ere boucle for
         x = 10 # on fixe l'abscisse
