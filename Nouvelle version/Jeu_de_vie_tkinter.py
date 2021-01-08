@@ -4,25 +4,18 @@ from random import *
 from tkinter import *
 import os
 import time
-#importation de shuffle
 from random import shuffle
  
  
-
-# TODO améliorer la déclaration des dimensions de notre fenêtre
-
 fenetre = Tk()
 fenetre.title("Le jeu de la vie")
 global dimension_frame
 dimension_frame = 600
-#Les couleurs c'est pour visualiser les frames
-frame_jeu_de_vie = Frame(fenetre, width=600, height=600)
+
+frame_jeu_de_vie = Frame(fenetre, width=dimension_frame, height=dimension_frame)
 frame_jeu_de_vie.grid(row = 0, column = 0, sticky = "nsew", rowspan = 2)
 
-canvas = Canvas(frame_jeu_de_vie, width=600, height=600, bg = "grey")
-#canvas = Canvas(fenetre, width=side*ligne, height=side*colonne)
-
-#Le canevas remplit bien toute la frame, c'est le grille de jeu qu'il faut redimensionner
+canvas = Canvas(frame_jeu_de_vie, width=dimension_frame, height=dimension_frame, bg = "grey")
 canvas.pack(expand = 1, fill=BOTH)
 
 frame_menu_haut = Frame(fenetre,width = 200, height = 300)
@@ -34,59 +27,71 @@ frame_menu_bas.grid(row = 1, column = 1,sticky = "sew")
 
 
 
-def initialiser(): 
-    x = 0 
-    y = 0 
+def initialiser():
+    """
+    Déclaration et intialisation des variables
+    """
+    x = 0 #abcisse
+    y = 0 #ordonnée
     global ligne
     global colonne
     global rectangles
+    global grille
+    grille = [] # liste vide
+    rectangles = [] # liste vide
+    
+
+    """
+    Initialisation à 0 de notre grille
+    """
     ligne = colonne = Taille.get()
+    grille = [[0 for i in range(ligne)] for j in range(colonne)] # on initialise à 0 la grille, toutes les cellules sont mortes
+
+    """
+    Gestion du pourcentage de vie
+    """
     nombre_cellules_en_vie=ligne*colonne*(Vie.get()/100)
 
-    global M
-    M = []
-    rectangles = []
-    
-
-    M = [[0 for i in range(ligne)] for j in range(colonne)] # on initialise à 0 la grille
-
-    #Génération de toutes les combinaisons possibles
-    combi = [] # stocke toutes les combinaison possible
+    combinaisons_coordonnees = [] # stocke toutes les combinaisons de coordonnées possibles, sous forme d'une liste de tuples
     for i in range(ligne):
         for j in range(colonne):
-            combi.append((j, i))
+            combinaisons_coordonnees.append((i, j)) # on ajoute à notre liste, le tuple contenant les coordonnées
     
-    shuffle(combi) # permet de mélanger la liste de façon aléatoire
+    shuffle(combinaisons_coordonnees) # permet de mélanger la liste de tuple (coordonnées) de façon aléatoire
 
-    for i in range(int(nombre_cellules_en_vie)):
-        i, j = combi.pop()
-        M[i][j] = 1
+    for i in range(int(nombre_cellules_en_vie)): # on caste nombre_cellules_en_vie en tant que entier 
+        i, j = combinaisons_coordonnees.pop() # la méthode pop permet de retourner le dernier tuple de la liste, on récupère ce tuple dans deux variables différentes
+        grille[i][j] = 1 # cellule vivante
 
+    """
+    On dessine les rectangles (les cellules) de notre grille en prenant en compte la taille de la grille
+    """
     for i in range(ligne):
         rectangles.append([]) # Liste de liste qui contient tous les rectangles
+        
         for j in range(colonne):
+            # dimension_frame/ligne est la dimension des côtés de nos rectangles qui varie en fonction de la taille de la grille sélectionnée
             rect = canvas.create_rectangle(x, y, x+(dimension_frame/ligne), y+(dimension_frame/ligne), fill="white") # (x,y) les coordonnées du coin supérieur gauche et (x+10, y+10) celles du coin inférieur droit.
-            rectangles[i].append(rect)
-            x += (dimension_frame/ligne) # l'ordonnée est fixé à 10, on incrémente "l'abscisse" uniquement (2ème boucle for)
-        # on est dans la 1ere boucle for
-        x = 0 # on fixe l'abscisse
+            rectangles[i].append(rect) # ajout de l'élément rect dans notre liste de liste
+            x += (dimension_frame/ligne) # l'ordonnée est fixé, on incrémente "l'abscisse" uniquement 
+        
+        x = 0 # on fixe l'abscisse à 0
         y += (dimension_frame/ligne) # on incrémente l'ordonnée
-    afficher_damier()
+    
+    afficher_grille()
     
 
 
 
-
-def afficher_damier(): 
+def afficher_grille(): 
     for i in range(ligne):
         for j in range(colonne):
-            if M[i][j]==1:
+            if grille[i][j]==1:
                 couleur = "red"
             else:
                 couleur = "white" # mettre le end car /n par défaut
             canvas.itemconfig(rectangles[i][j], fill=couleur)
 
-        #print("\n")
 
 
 
@@ -95,28 +100,28 @@ def nb_voisin (i,j):
         global colonne
         nb_voisin=0
         
-        if M[i][(j+1)%colonne]!=0:
+        if grille[i][(j+1)%colonne]!=0:
             nb_voisin+=1
 
-        if M[i][(j-1+colonne)%colonne]!=0:
+        if grille[i][(j-1+colonne)%colonne]!=0:
             nb_voisin+=1
 
-        if M[(i+1)%ligne][(j-1+colonne)%colonne]!=0:
+        if grille[(i+1)%ligne][(j-1+colonne)%colonne]!=0:
             nb_voisin+=1
         
-        if M[(i+1)%ligne][j]!=0:
+        if grille[(i+1)%ligne][j]!=0:
             nb_voisin+=1
 
-        if M[(i+1)%ligne][(j+1)%colonne]!=0:
+        if grille[(i+1)%ligne][(j+1)%colonne]!=0:
             nb_voisin+=1
 
-        if M[(i-1+ligne)%ligne][(j-1+colonne)%colonne]!=0:
+        if grille[(i-1+ligne)%ligne][(j-1+colonne)%colonne]!=0:
             nb_voisin+=1
 
-        if M[(i-1+ligne)%ligne][j]!=0:
+        if grille[(i-1+ligne)%ligne][j]!=0:
             nb_voisin+=1
 
-        if M[(i-1+ligne)%ligne][(j+1)%colonne]!=0:
+        if grille[(i-1+ligne)%ligne][(j+1)%colonne]!=0:
             nb_voisin+=1
 
         return nb_voisin
@@ -125,7 +130,7 @@ def nouvelle_generation():
         global ligne
         global colonne
         global t
-        global M
+        global grille
         voisin=0
         vecteur=[]
         x=0
@@ -140,15 +145,15 @@ def nouvelle_generation():
             for j in range (colonne):
                 voisin=nb_voisin(i,j)
                 if voisin==2:
-                    vecteur[i].append(M[i][j])
+                    vecteur[i].append(grille[i][j])
                     continue
                 if voisin==3:
                     vecteur[i].append(1)
                     continue
                 vecteur[i].append(0)
         # copier le temp dans le principale        
-        M=vecteur.copy()
-        afficher_damier()
+        grille=vecteur.copy()
+        afficher_grille()
         if vitesse !=10: 
             time.sleep(exp(-10*vitesse))
         global ID_nouvelle_generation
@@ -163,21 +168,23 @@ def quitter():
     fenetre.destroy()
 
 
-#initialiser()
+"""
+Initialisation des boutons
+"""
 
-Initialiser = Button(frame_menu_haut, text="Initialiser", command=initialiser, fg = "blue", width = 20)
+Initialiser = Button(frame_menu_haut, text="Initialiser", command=initialiser, fg = "blue",bg="#BDC3C7",width = 20,relief=RAISED)
 Initialiser.grid(row = 2, column = 0, sticky = "se")
 
-Lancer = Button(frame_menu_haut, text="Lancer", command=nouvelle_generation, fg = "blue", width = 20)
+Lancer = Button(frame_menu_haut, text="Lancer", command=nouvelle_generation, fg = "blue",bg="#BDC3C7", width = 20, relief=RAISED)
 Lancer.grid(row = 0, column = 0)
 
-Arreter = Button(frame_menu_haut, text="Arreter", command = arreter, fg = "blue", width = 20)
+Arreter = Button(frame_menu_haut, text="Arreter", command = arreter, fg = "blue",bg="#BDC3C7", width = 20,relief=RAISED)
 Arreter.grid(row = 1, column = 0)
 
-Quitter = Button(frame_menu_bas, text="Quitter", command = quitter, fg = "blue", width = 20)
+Quitter = Button(frame_menu_bas, text="Quitter", command = quitter, fg = "blue",bg="#BDC3C7", width = 20,relief=RAISED)
 Quitter.grid(row = 3, column = 0)
 
-Taille = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label="Taille de la grille",fg = "blue",width = 20)
+Taille = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label="Taille de la grille",fg = "blue", width = 20)
 Taille.set(30)
 Taille.grid(row = 0, column = 0, sticky = "ew")
 
