@@ -131,6 +131,7 @@ def nouvelle_generation():
         x=0
         y=0
         vitesse = Vitesse.get()
+        
 
         # calculer le damier de la nouvelle génération en appliquant les règles
 
@@ -148,8 +149,8 @@ def nouvelle_generation():
         # copier le temp dans le principale        
         M=vecteur.copy()
         afficher_damier()
-        #FIXME Message d'erreur dans le terminal quand on bouge le curseur
-        time.sleep(exp(-vitesse))
+        if vitesse !=10: 
+            time.sleep(exp(-10*vitesse))
         global ID_nouvelle_generation
         ID_nouvelle_generation = fenetre.after(200, nouvelle_generation)
 
@@ -176,16 +177,19 @@ Arreter.grid(row = 1, column = 0)
 Quitter = Button(frame_menu_bas, text="Quitter", command = quitter, fg = "blue", width = 20)
 Quitter.grid(row = 3, column = 0)
 
-Taille = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='Taille de la grille',fg = "blue",width = 20)
-Taille.grid(row = 0, column = 0)
+Taille = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label="Taille de la grille",fg = "blue",width = 20)
+Taille.set(30)
+Taille.grid(row = 0, column = 0, sticky = "ew")
 
 
 Vitesse = Scale(frame_menu_bas, orient='horizontal', from_=0, to=10, resolution=1, label='Vitesse',width = 20,command = lambda val: print(val), fg = "blue")
-Vitesse.grid(row = 2, column = 0)
+Vitesse.set(5)
+Vitesse.grid(row = 2, column = 0, sticky = "ew")
 
 
 Vie = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='% de vie', fg = "blue",width = 20,command = lambda val: print(val))
-Vie.grid(row = 1, column = 0)
+Vie.set(20)
+Vie.grid(row = 1, column = 0, sticky = "ew")
 
 #fenetre.after(500, life)
 
