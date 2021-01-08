@@ -5,10 +5,14 @@ from tkinter import *
 import os
 import time
 from random import shuffle
- 
+
+"""
+    Implémentation des frames et canvas
+"""
  
 fenetre = Tk()
 fenetre.title("Le jeu de la vie")
+
 global dimension_frame
 dimension_frame = 600
 
@@ -24,6 +28,10 @@ frame_menu_haut.grid(row = 0, column = 1,sticky = "nsew")
 frame_menu_bas = Frame(fenetre,width = 200, height = 300)
 frame_menu_bas.grid(row = 1, column = 1,sticky = "sew")
 
+
+"""
+    Implémentation des fonctions pour réaliser le jeu de la vie
+"""
 
 
 
@@ -89,11 +97,14 @@ def afficher_grille():
             if grille[i][j]==1:
                 couleur = "red"
             else:
-                couleur = "white" # mettre le end car /n par défaut
-            canvas.itemconfig(rectangles[i][j], fill=couleur)
+                couleur = "white"
+            canvas.itemconfig(rectangles[i][j], fill=couleur) # on remplit les rectangles avec la couleur définie au préalable
 
 
 
+"""
+Aucune modification a apportée dans cette fonction nb_voisin c'est-à-dire aucune fonction tkinter n'a été appelée ici
+"""
 
 def nb_voisin (i,j):
         global ligne
@@ -126,6 +137,9 @@ def nb_voisin (i,j):
 
         return nb_voisin
 
+"""
+gestion de la nouvelle generation de la grille en prenant en compte la vitesse de la generation
+"""
 def nouvelle_generation():
         global ligne
         global colonne
@@ -138,7 +152,7 @@ def nouvelle_generation():
         vitesse = Vitesse.get()
         
 
-        # calculer le damier de la nouvelle génération en appliquant les règles
+        # calculer la grille de la nouvelle génération en appliquant les règles vues en TD
 
         for i in range(ligne):
             vecteur.append([])
@@ -156,20 +170,22 @@ def nouvelle_generation():
         afficher_grille()
         if vitesse !=10: 
             time.sleep(exp(-10*vitesse))
+        
+        # utile pour la fonction arreter
         global ID_nouvelle_generation
         ID_nouvelle_generation = fenetre.after(200, nouvelle_generation)
 
 
 
 def arreter():
-    fenetre.after_cancel(ID_nouvelle_generation)
+    fenetre.after_cancel(ID_nouvelle_generation) # on s'arrrete à la dernière génération exécutée
 
 def quitter():
-    fenetre.destroy()
+    fenetre.destroy() # on quitte le programme
 
 
 """
-Initialisation des boutons
+Implémentation des boutons (button)
 """
 
 Initialiser = Button(frame_menu_haut, text="Initialiser", command=initialiser, fg = "blue",bg="#BDC3C7",width = 20,relief=RAISED)
@@ -184,21 +200,28 @@ Arreter.grid(row = 1, column = 0)
 Quitter = Button(frame_menu_bas, text="Quitter", command = quitter, fg = "blue",bg="#BDC3C7", width = 20,relief=RAISED)
 Quitter.grid(row = 3, column = 0)
 
+
+"""
+Implémentation des échelles (scale)
+"""
+
 Taille = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label="Taille de la grille",fg = "blue", width = 20)
 Taille.set(30)
 Taille.grid(row = 0, column = 0, sticky = "ew")
 
 
 Vitesse = Scale(frame_menu_bas, orient='horizontal', from_=0, to=10, resolution=1, label='Vitesse',width = 20,command = lambda val: print(val), fg = "blue")
+# lambda val: print(val) permet d'afficher en temps réel sur le terminal la valeur prise par l'échelle (simple outil de vérification)
 Vitesse.set(5)
 Vitesse.grid(row = 2, column = 0, sticky = "ew")
 
 
 Vie = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='% de vie', fg = "blue",width = 20,command = lambda val: print(val))
+# lambda val: print(val) permet d'afficher en temps réel sur le terminal la valeur prise par l'échelle (simple outil de vérification)
 Vie.set(20)
 Vie.grid(row = 1, column = 0, sticky = "ew")
 
-#fenetre.after(500, life)
+
 
 fenetre.mainloop()
 
