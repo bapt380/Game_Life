@@ -2,8 +2,6 @@
 from math import *
 from random import *
 from tkinter import *
-import os
-import time
 from random import shuffle
 
 """
@@ -17,22 +15,24 @@ global dimension_frame
 dimension_frame = 600
 
 frame_jeu_de_vie = Frame(fenetre, width=dimension_frame, height=dimension_frame)
+# frame située à gauche de l'écran
 frame_jeu_de_vie.grid(row = 0, column = 0, sticky = "nsew", rowspan = 2)
 
 canvas = Canvas(frame_jeu_de_vie, width=dimension_frame, height=dimension_frame, bg = "grey")
 canvas.pack(expand = 1, fill=BOTH)
 
 frame_menu_haut = Frame(fenetre,width = 200, height = 300)
+# frame située en haut à droite de l'écran
 frame_menu_haut.grid(row = 0, column = 1,sticky = "nsew")
 
 frame_menu_bas = Frame(fenetre,width = 200, height = 300)
+# frame située en bas à droite de l'écran
 frame_menu_bas.grid(row = 1, column = 1,sticky = "sew")
 
 
 """
     Implémentation des fonctions pour réaliser le jeu de la vie
 """
-
 
 
 def initialiser():
@@ -143,15 +143,14 @@ gestion de la nouvelle generation de la grille en prenant en compte la vitesse d
 def nouvelle_generation():
         global ligne
         global colonne
-        global t
         global grille
         voisin=0
         vecteur=[]
         x=0
         y=0
-        vitesse = Vitesse.get()
-        
 
+        vitesse = Vitesse.get() # on récupère la valeur retournée par l'échelle de la vitesse
+        
         # calculer la grille de la nouvelle génération en appliquant les règles vues en TD
 
         for i in range(ligne):
@@ -165,12 +164,12 @@ def nouvelle_generation():
                     vecteur[i].append(1)
                     continue
                 vecteur[i].append(0)
-        # copier le temp dans le principale        
+        # copier le vecteur temporaire dans le principale        
         grille=vecteur.copy()
         afficher_grille()
         # utile pour la fonction arreter
         global ID_nouvelle_generation
-        ID_nouvelle_generation = fenetre.after(1001 - 10*vitesse, nouvelle_generation)
+        ID_nouvelle_generation = fenetre.after(1001 - 10*vitesse, nouvelle_generation) # permet de mettre un delai pour passer à la génération suivante, varie en fonction de la vitesse
 
 
 
@@ -178,13 +177,14 @@ def arreter():
     fenetre.after_cancel(ID_nouvelle_generation) # on s'arrrete à la dernière génération exécutée
 
 def quitter():
-    fenetre.destroy() # on quitte le programme
+    fenetre.destroy() # on quitte le programme, la commande tkinter se ferme
 
 
 """
 Implémentation des boutons (button)
 """
 
+# on fait appel à la fonction initialiser
 Initialiser = Button(frame_menu_haut, text="Initialiser", command=initialiser, fg = "blue",bg="#BDC3C7",width = 20,relief=RAISED)
 Initialiser.grid(row = 2, column = 0, sticky = "se")
 
