@@ -168,12 +168,9 @@ def nouvelle_generation():
         # copier le temp dans le principale        
         grille=vecteur.copy()
         afficher_grille()
-        if vitesse !=10: 
-            time.sleep(exp(-10*vitesse))
-        
         # utile pour la fonction arreter
         global ID_nouvelle_generation
-        ID_nouvelle_generation = fenetre.after(200, nouvelle_generation)
+        ID_nouvelle_generation = fenetre.after(1001 - 10*vitesse, nouvelle_generation)
 
 
 
@@ -210,7 +207,7 @@ Taille.set(30)
 Taille.grid(row = 0, column = 0, sticky = "ew")
 
 
-Vitesse = Scale(frame_menu_bas, orient='horizontal', from_=0, to=10, resolution=1, label='Vitesse',width = 20,command = lambda val: print(val), fg = "blue")
+Vitesse = Scale(frame_menu_bas, orient='horizontal', from_=0, to=100, resolution=1, label='Vitesse',width = 20,command = lambda val: print(val), fg = "blue")
 # lambda val: print(val) permet d'afficher en temps réel sur le terminal la valeur prise par l'échelle (simple outil de vérification)
 Vitesse.set(5)
 Vitesse.grid(row = 2, column = 0, sticky = "ew")
